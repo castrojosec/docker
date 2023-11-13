@@ -1,0 +1,28 @@
+version: '3'
+
+services:
+  apache:
+    image: ubuntu:latest
+    command: /bin/bash -c "apt-get update && apt-get install -y apache2 && apache2-foreground"
+    ports:
+      - "8080:80"
+    networks:
+      - mynetwork
+
+  mysql:
+    image: mysql:latest
+    environment:
+      MYSQL_ROOT_PASSWORD: root_password
+      MYSQL_DATABASE: mydatabase
+      MYSQL_USER: myuser
+      MYSQL_PASSWORD: mypassword
+    networks:
+      - mynetwork
+
+  php:
+    image: php:latest
+    networks:
+      - mynetwork
+
+networks:
+  mynetwork:
